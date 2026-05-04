@@ -4,6 +4,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Security: restrict resource origins, block clickjacking, prevent base-tag injection -->
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://cdn.emailjs.com;
+    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com;
+    font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com;
+    img-src 'self' data: https://img.youtube.com https://i.ytimg.com;
+    connect-src 'self' https://api.emailjs.com https://translate.googleapis.com;
+    frame-src https://www.youtube.com;
+    frame-ancestors 'none';
+    base-uri 'self';
+    form-action 'self' mailto:;
+  " />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <title>TechGurukul — Recharge Your Learning</title>
   <link rel="icon" href="new_logo.png" type="image/png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -33,6 +47,7 @@
         <li><a href="#about" class="nav-link">About</a></li>
         <li><a href="#topics" class="nav-link">Topics</a></li>
         <li><a href="#services" class="nav-link">Services</a></li>
+        <li><a href="courses.html" class="nav-link nav-link-courses">AI Courses</a></li>
         <li><a href="#videos" class="nav-link">Videos</a></li>
         <li><a href="#contact" class="nav-link">Contact</a></li>
       </ul>
@@ -52,7 +67,7 @@
         <p class="hero-role">AI &amp; Automation Creator</p>
         <p class="hero-tagline">Recharge Your Learning</p>
         <div class="hero-actions">
-          <a href="https://www.youtube.com/@techgurukul_in9220" target="_blank" rel="noopener" class="btn btn-primary">
+          <a href="https://www.youtube.com/@techgurukul_in9220" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
             <i class="fab fa-youtube"></i> Watch on YouTube
           </a>
           <a href="#contact" class="btn btn-outline">Contact Me</a>
@@ -355,42 +370,42 @@
 
       <div class="videos-grid">
         <div class="video-card">
-          <a href="https://www.youtube.com/watch?v=lDfAZZj35LQ" target="_blank" rel="noopener" class="video-thumb-link">
+          <a href="https://www.youtube.com/watch?v=lDfAZZj35LQ" target="_blank" rel="noopener noreferrer" class="video-thumb-link">
             <img src="https://img.youtube.com/vi/lDfAZZj35LQ/hqdefault.jpg" alt="AI Automation for Beginners" class="video-thumb" loading="lazy" />
             <div class="play-overlay"><i class="fab fa-youtube"></i></div>
           </a>
           <div class="video-info">
             <h3>AI Automation for Beginners</h3>
             <p>Learn how to build your first AI-powered automation workflow from scratch.</p>
-            <a href="https://www.youtube.com/watch?v=lDfAZZj35LQ" target="_blank" rel="noopener" class="btn btn-sm">
+            <a href="https://www.youtube.com/watch?v=lDfAZZj35LQ" target="_blank" rel="noopener noreferrer" class="btn btn-sm">
               <i class="fas fa-play"></i> Watch Now
             </a>
           </div>
         </div>
 
         <div class="video-card">
-          <a href="https://www.youtube.com/watch?v=MxKfgSaTW-I&t=117s" target="_blank" rel="noopener" class="video-thumb-link">
+          <a href="https://www.youtube.com/watch?v=MxKfgSaTW-I&t=117s" target="_blank" rel="noopener noreferrer" class="video-thumb-link">
             <img src="https://img.youtube.com/vi/MxKfgSaTW-I/hqdefault.jpg" alt="Data Engineering Pipeline Tutorial" class="video-thumb" loading="lazy" />
             <div class="play-overlay"><i class="fab fa-youtube"></i></div>
           </a>
           <div class="video-info">
             <h3>Data Engineering Pipeline Tutorial</h3>
             <p>End-to-end ETL pipeline using Python and modern cloud tools.</p>
-            <a href="https://www.youtube.com/watch?v=MxKfgSaTW-I&t=117s" target="_blank" rel="noopener" class="btn btn-sm">
+            <a href="https://www.youtube.com/watch?v=MxKfgSaTW-I&t=117s" target="_blank" rel="noopener noreferrer" class="btn btn-sm">
               <i class="fas fa-play"></i> Watch Now
             </a>
           </div>
         </div>
 
         <div class="video-card">
-          <a href="https://www.youtube.com/watch?v=m68IMTB1ZkQ&t=103s" target="_blank" rel="noopener" class="video-thumb-link">
+          <a href="https://www.youtube.com/watch?v=m68IMTB1ZkQ&t=103s" target="_blank" rel="noopener noreferrer" class="video-thumb-link">
             <img src="https://img.youtube.com/vi/m68IMTB1ZkQ/hqdefault.jpg" alt="Build an AI Agent in Python" class="video-thumb" loading="lazy" />
             <div class="play-overlay"><i class="fab fa-youtube"></i></div>
           </a>
           <div class="video-info">
             <h3>Build an AI Agent in Python</h3>
             <p>Step-by-step guide to creating intelligent agents using LLMs and tools.</p>
-            <a href="https://www.youtube.com/watch?v=m68IMTB1ZkQ&t=103s" target="_blank" rel="noopener" class="btn btn-sm">
+            <a href="https://www.youtube.com/watch?v=m68IMTB1ZkQ&t=103s" target="_blank" rel="noopener noreferrer" class="btn btn-sm">
               <i class="fas fa-play"></i> Watch Now
             </a>
           </div>
@@ -398,7 +413,7 @@
       </div>
 
       <div class="videos-cta">
-        <a href="https://www.youtube.com/@techgurukul_in9220" target="_blank" rel="noopener" class="btn btn-primary">
+        <a href="https://www.youtube.com/@techgurukul_in9220" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
           <i class="fab fa-youtube"></i> View All Videos
         </a>
       </div>
@@ -431,19 +446,19 @@
           <div class="contact-socials">
             <h4>Find me on</h4>
             <div class="social-links">
-              <a href="https://www.youtube.com/@techgurukul_in9220" target="_blank" rel="noopener"
+              <a href="https://www.youtube.com/@techgurukul_in9220" target="_blank" rel="noopener noreferrer"
                 class="social-btn youtube" aria-label="YouTube">
                 <i class="fab fa-youtube"></i>
               </a>
-              <a href="https://www.facebook.com/profile.php?id=100063966523167" target="_blank" rel="noopener"
+              <a href="https://www.facebook.com/profile.php?id=100063966523167" target="_blank" rel="noopener noreferrer"
                 class="social-btn facebook" aria-label="Facebook">
                 <i class="fab fa-facebook-f"></i>
               </a>
-              <a href="https://www.linkedin.com/feed/" target="_blank" rel="noopener" class="social-btn linkedin"
+              <a href="https://www.linkedin.com/feed/" target="_blank" rel="noopener noreferrer" class="social-btn linkedin"
                 aria-label="LinkedIn">
                 <i class="fab fa-linkedin-in"></i>
               </a>
-              <a href="https://medium.com/@duke-lavlesh" target="_blank" rel="noopener" class="social-btn medium" aria-label="Medium">
+              <a href="https://medium.com/@duke-lavlesh" target="_blank" rel="noopener noreferrer" class="social-btn medium" aria-label="Medium">
                 <i class="fab fa-medium"></i>
               </a>
               <a href="mailto:duke.lavlesh@gmail.com" class="social-btn email" aria-label="Email">

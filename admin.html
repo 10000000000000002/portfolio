@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com;
+    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com;
+    font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com;
+    img-src 'self' data: blob:;
+    connect-src 'self';
+    frame-ancestors 'none';
+    base-uri 'self';
+    form-action 'self';
+  " />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <title>Content Manager — TechGurukul Admin</title>
+  <link rel="icon" href="new_logo.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/post.css" />
+  <script src="https://cdn.jsdelivr.net/npm/marked@9/marked.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.6/purify.min.js"></script>
+</head>
+<body style="padding-top:0;">
+
+  <!-- ═══════════ LOGIN OVERLAY ═══════════ -->
+  <div class="admin-login-overlay" id="admin-login-overlay">
+    <div class="admin-login-box">
+      <div class="admin-login-icon"><i class="fas fa-shield-alt"></i></div>
+      <h2>Admin Panel</h2>
+      <p>Enter your password to manage course content.</p>
+      <form id="login-form">
+        <input type="password" class="admin-login-field" id="admin-pw"
+               placeholder="Admin password" autocomplete="current-password" />
+        <p class="admin-login-error" id="login-error">
+          <i class="fas fa-exclamation-circle"></i> Incorrect password.
+        </p>
+        <button type="submit" class="btn btn-primary full-width" style="margin-top:4px;">
+          <i class="fas fa-unlock"></i> Sign In
+        </button>
+      </form>
+      <p style="font-size:0.72rem;color:var(--text-muted);margin-top:16px;">
+        Not an admin? <a href="courses.html" style="color:var(--accent);">Back to Courses</a>
+      </p>
+    </div>
+  </div>
+
+  <!-- ═══════════ NAVBAR ═══════════ -->
+  <nav class="navbar scrolled" id="navbar" style="z-index:100;">
+    <div class="nav-container">
+      <a href="index.html" class="nav-brand">
+        <div class="nav-logo-circle">
+          <img src="new_logo.png" alt="TechGurukul Logo" class="nav-logo" />
+        </div>
+        <div class="nav-brand-text">
+          <span class="nav-brand-name">TechGurukul</span>
+          <span class="nav-brand-tagline">Content Manager</span>
+        </div>
+      </a>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <span class="section-tag" style="margin:0;padding:5px 12px;">
+          <i class="fas fa-user-shield"></i> Admin
+        </span>
+        <a href="courses.html" class="btn" style="padding:8px 14px;font-size:0.78rem;">
+          <i class="fas fa-eye"></i> View Site
+        </a>
+        <button class="btn" style="padding:8px 14px;font-size:0.78rem;" onclick="logout()">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ═══════════ ADMIN LAYOUT ═══════════ -->
+  <div class="admin-layout">
+
+    <!-- ── Sidebar ── -->
+    <aside class="admin-sidebar">
+      <div class="admin-sidebar-header">
+        <h3><i class="fas fa-folder-open" style="color:var(--accent);margin-right:6px;"></i> Modules</h3>
+        <button class="admin-logout-btn" onclick="logout()" title="Logout">
+          <i class="fas fa-sign-out-alt"></i>
+        </button>
+      </div>
+      <div class="admin-tier-tabs" id="admin-tier-tabs"></div>
+      <div class="admin-module-list" id="admin-module-list"></div>
+    </aside>
+
+    <!-- ── Main Area ── -->
+    <main class="admin-main">
+
+      <!-- No module selected state -->
+      <div class="admin-no-selection" id="admin-no-selection">
+        <i class="fas fa-mouse-pointer"></i>
+        <p>Select a module from the sidebar to start writing.</p>
+        <p style="font-size:0.75rem;opacity:0.5;">
+          Green dot = content exists &nbsp;|&nbsp; Empty dot = no content yet
+        </p>
+      </div>
+
+      <!-- ── Editor (shown after module select) ── -->
+      <div id="admin-editor" style="display:none;flex:1;flex-direction:column;">
+
+        <!-- Header -->
+        <div class="admin-editor-header">
+          <div>
+            <div class="admin-editor-title" id="editor-module-title">Select a module</div>
+            <div class="admin-editor-meta" id="editor-module-meta"></div>
+          </div>
+          <div class="admin-editor-actions">
+            <button class="admin-action-btn btn-import" onclick="importPosts()" title="Import posts from JSON">
+              <i class="fas fa-file-import"></i> Import
+            </button>
+            <button class="admin-action-btn btn-export" onclick="exportPosts()" title="Export all posts as JSON">
+              <i class="fas fa-file-export"></i> Export
+            </button>
+            <button class="admin-action-btn btn-draft" onclick="savePost('draft')">
+              <i class="fas fa-save"></i> Save Draft
+            </button>
+            <button class="admin-action-btn btn-publish" onclick="savePost('published')">
+              <i class="fas fa-globe"></i> Publish
+            </button>
+          </div>
+        </div>
+
+        <!-- Write / Preview tabs -->
+        <div class="editor-tabs">
+          <button class="editor-tab active" data-tab="write" onclick="switchTab('write')">
+            <i class="fas fa-pencil-alt"></i> Write
+          </button>
+          <button class="editor-tab" data-tab="preview" onclick="switchTab('preview')">
+            <i class="fas fa-eye"></i> Preview
+          </button>
+        </div>
+
+        <!-- Formatting toolbar -->
+        <div class="editor-toolbar">
+          <button class="toolbar-btn" onclick="insertMd('h2')"    title="Heading 2">H2</button>
+          <button class="toolbar-btn" onclick="insertMd('h3')"    title="Heading 3">H3</button>
+          <div class="toolbar-sep"></div>
+          <button class="toolbar-btn" onclick="insertMd('bold')"  title="Bold"><b>B</b></button>
+          <button class="toolbar-btn" onclick="insertMd('italic')" title="Italic"><i>I</i></button>
+          <button class="toolbar-btn" onclick="insertMd('bi')"    title="Bold Italic"><b><i>BI</i></b></button>
+          <div class="toolbar-sep"></div>
+          <button class="toolbar-btn" onclick="insertMd('quote')"     title="Blockquote">❝ Quote</button>
+          <button class="toolbar-btn" onclick="insertMd('code')"      title="Inline code">&lt;/&gt; Code</button>
+          <button class="toolbar-btn" onclick="insertMd('codeblock')" title="Code block">```Block</button>
+          <div class="toolbar-sep"></div>
+          <button class="toolbar-btn" onclick="insertMd('ul')"   title="Bullet list">• List</button>
+          <button class="toolbar-btn" onclick="insertMd('ol')"   title="Numbered list">1. List</button>
+          <div class="toolbar-sep"></div>
+          <button class="toolbar-btn" onclick="insertMd('link')" title="Link">🔗 Link</button>
+          <button class="toolbar-btn" onclick="insertMd('hr')"   title="Horizontal rule">— Rule</button>
+          <button class="toolbar-btn" onclick="insertMd('table')" title="Table">⊞ Table</button>
+          <div class="toolbar-sep"></div>
+          <button class="toolbar-btn toolbar-btn-img" onclick="toggleImgPopover(event)" title="Insert image">
+            🖼️ Image
+          </button>
+        </div>
+
+        <!-- Image insert popover -->
+        <div class="img-popover" id="img-popover">
+          <div class="img-popover-tabs">
+            <button class="img-tab active" id="img-tab-url"    onclick="switchImgTab('url')">🔗 From URL</button>
+            <button class="img-tab"        id="img-tab-upload" onclick="switchImgTab('upload')">📁 Upload File</button>
+            <button class="img-popover-close" onclick="closeImgPopover()" title="Close">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+
+          <!-- URL panel -->
+          <div id="img-panel-url">
+            <div class="img-field-row">
+              <input type="text" id="img-url-input" class="admin-login-field"
+                     placeholder="https://example.com/image.png"
+                     style="margin-bottom:8px;" />
+              <input type="text" id="img-alt-input" class="admin-login-field"
+                     placeholder="Alt text (optional, e.g. diagram of neural network)"
+                     style="margin-bottom:12px;" />
+              <button class="admin-action-btn btn-publish full-width" onclick="insertImageFromUrl()">
+                <i class="fas fa-plus"></i> Insert Image
+              </button>
+            </div>
+          </div>
+
+          <!-- Upload panel -->
+          <div id="img-panel-upload" style="display:none;">
+            <div class="img-drop-zone" id="img-drop-zone"
+                 onclick="document.getElementById('img-file-input').click()"
+                 ondragover="imgDragOver(event)" ondragleave="imgDragLeave(event)" ondrop="imgDrop(event)">
+              <i class="fas fa-cloud-upload-alt"></i>
+              <p>Click to choose or drag &amp; drop an image here</p>
+              <small>PNG, JPG, GIF, WebP — converted to base64 &amp; embedded</small>
+            </div>
+            <div id="img-upload-preview" style="display:none;">
+              <img id="img-upload-thumb" src="" alt="preview" />
+              <div style="display:flex;gap:8px;margin-top:10px;">
+                <input type="text" id="img-upload-alt" class="admin-login-field"
+                       placeholder="Alt text (optional)" style="margin-bottom:0;flex:1;" />
+                <button class="admin-action-btn btn-publish" onclick="insertUploadedImage()" style="flex-shrink:0;">
+                  <i class="fas fa-plus"></i> Insert
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <p class="img-paste-hint">
+            <i class="fas fa-lightbulb"></i>
+            Tip: You can also <strong>Ctrl+V</strong> (paste) a copied image directly into the editor.
+          </p>
+        </div>
+
+        <!-- Textarea (Write tab) -->
+        <div class="editor-write-area" id="editor-write-area">
+          <textarea id="editor-textarea"
+            placeholder="## Introduction&#10;&#10;Write your module content here using Markdown...&#10;&#10;## What You Will Learn&#10;&#10;- Concept 1&#10;- Concept 2&#10;&#10;## Getting Started&#10;&#10;Your explanation goes here...&#10;&#10;```python&#10;# Code example&#10;print('Hello, AI World!')&#10;```&#10;&#10;## Summary&#10;&#10;Wrap up the key takeaways."></textarea>
+        </div>
+
+        <!-- Preview (Preview tab) -->
+        <div class="editor-preview-area post-content" id="editor-preview-area"></div>
+
+        <!-- Status bar -->
+        <div class="editor-statusbar">
+          <div class="status-indicator">
+            <div class="status-dot" id="status-dot"></div>
+            <span id="status-text">No changes</span>
+          </div>
+          <span class="char-count" id="char-count">0 words</span>
+        </div>
+
+      </div>
+
+      <!-- ── All Posts Table ── -->
+      <div class="admin-posts-section">
+        <h3>
+          <i class="fas fa-list" style="color:var(--accent);"></i>
+          All Posts
+        </h3>
+        <table class="posts-table">
+          <thead>
+            <tr>
+              <th style="width:36px;"></th>
+              <th>Module</th>
+              <th>Track</th>
+              <th>Status</th>
+              <th>Words · Updated</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="posts-table-body">
+            <tr>
+              <td colspan="6" style="text-align:center;color:var(--text-muted);padding:28px;">
+                No posts yet — select a module and start writing!
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer" style="margin-left:280px;">
+    <div class="container footer-inner">
+      <p class="footer-copy">
+        &copy; <span id="year"></span> TechGurukul Admin Panel ·
+        <a href="courses.html" style="color:var(--accent);">View live site</a>
+      </p>
+    </div>
+  </footer>
+
+  <!-- Toast notification -->
+  <div id="admin-toast"></div>
+
+  <!-- Hidden file inputs -->
+  <input type="file" id="import-file-input" accept=".json"   style="display:none;" />
+  <input type="file" id="img-file-input"    accept="image/*" style="display:none;" />
+
+  <script src="js/course-data.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

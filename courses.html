@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com;
+    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com;
+    font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com;
+    img-src 'self' data:;
+    connect-src 'self';
+    frame-ancestors 'none';
+    base-uri 'self';
+    form-action 'self' mailto:;
+  " />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <title>AI Courses — TechGurukul</title>
+  <link rel="icon" href="new_logo.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/courses.css" />
+</head>
+<body>
+
+  <!-- ═══════════ NAVBAR ═══════════ -->
+  <nav class="navbar scrolled" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-brand">
+        <div class="nav-logo-circle">
+          <img src="new_logo.png" alt="TechGurukul Logo" class="nav-logo" />
+        </div>
+        <div class="nav-brand-text">
+          <span class="nav-brand-name">TechGurukul</span>
+          <span class="nav-brand-tagline">Recharge Your Learning</span>
+        </div>
+      </a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="index.html#about" class="nav-link">About</a></li>
+        <li><a href="index.html#services" class="nav-link">Services</a></li>
+        <li><a href="courses.html" class="nav-link active nav-link-courses">AI Courses</a></li>
+        <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ═══════════ HERO ═══════════ -->
+  <section class="courses-hero">
+    <div class="courses-hero-bg"></div>
+    <div class="container courses-hero-content">
+      <span class="section-tag">AI Education Platform</span>
+      <h1 class="courses-hero-title">India's Complete<br><span class="accent-gradient">AI Education Curriculum</span></h1>
+      <p class="courses-hero-sub">From Curious Learner to AI Industry Expert</p>
+      <div class="courses-hero-stats">
+        <div class="hero-stat"><span>4</span><small>Learning Tracks</small></div>
+        <div class="hero-stat"><span>35+</span><small>Modules</small></div>
+        <div class="hero-stat"><span>100%</span><small>Practical</small></div>
+        <div class="hero-stat"><span>🇮🇳</span><small>Made for India</small></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ INTRO / MISSION ═══════════ -->
+  <section class="course-intro-section">
+    <div class="container">
+
+      <div class="intro-headline-wrap">
+        <span class="section-tag">Why This Course?</span>
+        <h2 class="intro-headline">India's Most Practical<br><span class="accent-gradient">AI Learning Program</span></h2>
+        <p class="intro-lead">Built for students from Class 5 to graduation — no coding experience needed.</p>
+      </div>
+
+      <div class="intro-manifesto">
+        <div class="manifesto-quote">
+          <i class="fas fa-quote-left manifesto-quote-icon"></i>
+          <p>This is not a boring theory course. It's a hands-on journey where students learn by building real things — websites, AI agents, and smart applications.</p>
+        </div>
+
+        <div class="intro-pillars">
+          <div class="pillar-card">
+            <div class="pillar-icon"><i class="fas fa-bolt"></i></div>
+            <h4>Real Skills, Not Theory</h4>
+            <p>Learn a concept, try it yourself, then build something real. No confusion. No heavy theory.</p>
+          </div>
+          <div class="pillar-card">
+            <div class="pillar-icon"><i class="fas fa-seedling"></i></div>
+            <h4>Start From Zero</h4>
+            <p>A Class 5 student can begin with fun, visual learning and build their first AI-powered website.</p>
+          </div>
+          <div class="pillar-card">
+            <div class="pillar-icon"><i class="fas fa-rupee-sign"></i></div>
+            <h4>Budget-Friendly for India</h4>
+            <p>All tools used are free or low-cost — any student across India can start without worrying about cost.</p>
+          </div>
+          <div class="pillar-card">
+            <div class="pillar-icon"><i class="fas fa-briefcase"></i></div>
+            <h4>Portfolio You Can Show</h4>
+            <p>You don't just learn — you create projects you can show to others. Real skills, real confidence.</p>
+          </div>
+        </div>
+
+        <div class="intro-stat-strip">
+          <div class="istat">
+            <span class="istat-num">1M+</span>
+            <span class="istat-label">AI professionals India needs soon</span>
+          </div>
+          <div class="istat-divider"></div>
+          <div class="istat">
+            <span class="istat-num">Class 5</span>
+            <span class="istat-label">Starting age — no prior coding needed</span>
+          </div>
+          <div class="istat-divider"></div>
+          <div class="istat">
+            <span class="istat-num">3 Tracks</span>
+            <span class="istat-label">Foundation → Explorer → Expert</span>
+          </div>
+        </div>
+
+        <div class="intro-body-text">
+          <p>AI is the future, and India will need over 1 million AI professionals very soon. But most students are still stuck with outdated learning. This course fixes that — starting from the basics and slowly taking every student to real-world AI skills.</p>
+          <p>School students move ahead to creating their own AI tools. Graduates go even deeper — working with cloud AI and real industry-level projects. Every part is designed to be simple, practical, and progressive.</p>
+        </div>
+
+        <div class="intro-closer">
+          <i class="fas fa-rocket intro-closer-icon"></i>
+          <p><strong>Start small. Build big. Create your future with AI.</strong><br>
+          <span>This is not just a course — it's a clear path from beginner to AI-ready.</span></p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════ TIER SELECTOR ═══════════ -->
+  <section class="tier-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Choose Your Level</span>
+        <h2>Select Your Learning Track</h2>
+        <p class="section-desc">Click a track to explore the full curriculum. First 2 modules are free for everyone.</p>
+      </div>
+
+      <div class="tier-cards">
+        <button class="tier-card foundation-card" onclick="selectTier('foundation')" id="btn-foundation">
+          <div class="tier-badge">🌱</div>
+          <div class="tier-info">
+            <span class="tier-class">CLASS 5–8</span>
+            <span class="tier-name">Foundation</span>
+            <span class="tier-tagline">Build your AI base</span>
+          </div>
+          <div class="tier-meta">
+            <span><i class="fas fa-book-open"></i> 7 Modules + Project</span>
+            <span><i class="fas fa-clock"></i> 24 hrs</span>
+          </div>
+        </button>
+
+        <button class="tier-card explorer-card" onclick="selectTier('explorer')" id="btn-explorer">
+          <div class="tier-badge">🚀</div>
+          <div class="tier-info">
+            <span class="tier-class">CLASS 9–12</span>
+            <span class="tier-name">Explorer</span>
+            <span class="tier-tagline">Dive deep into AI</span>
+          </div>
+          <div class="tier-meta">
+            <span><i class="fas fa-book-open"></i> 7 Modules + Project</span>
+            <span><i class="fas fa-clock"></i> 40 hrs</span>
+          </div>
+        </button>
+
+        <button class="tier-card expert-card" onclick="selectTier('expert')" id="btn-expert">
+          <div class="tier-badge">🏆</div>
+          <div class="tier-info">
+            <span class="tier-class">GRADUATION</span>
+            <span class="tier-name">Expert</span>
+            <span class="tier-tagline">Become industry-ready</span>
+          </div>
+          <div class="tier-meta">
+            <span><i class="fas fa-book-open"></i> 8 Modules + Project</span>
+            <span><i class="fas fa-clock"></i> 60 hrs</span>
+          </div>
+        </button>
+
+        <button class="tier-card ai-engineer-card" onclick="selectTier('ai_engineer')" id="btn-ai_engineer">
+          <div class="tier-badge">⚡</div>
+          <div class="tier-info">
+            <span class="tier-class">PROFESSIONAL</span>
+            <span class="tier-name">AI Engineering</span>
+            <span class="tier-tagline">Build production AI systems</span>
+          </div>
+          <div class="tier-meta">
+            <span><i class="fas fa-book-open"></i> 10 Modules + Project</span>
+            <span><i class="fas fa-clock"></i> 80 hrs</span>
+          </div>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ CURRICULUM ═══════════ -->
+  <section class="curriculum-section" id="curriculum-section" style="display:none;">
+    <div class="container">
+
+      <div class="curriculum-header" id="curriculum-header"></div>
+
+      <div class="free-banner">
+        <i class="fas fa-gift"></i>
+        <span>First <strong>2 modules are FREE</strong> for everyone — no sign-up needed. Unlock the full course to access all modules.</span>
+      </div>
+
+      <div class="modules-grid" id="modules-grid"></div>
+
+      <div class="unlock-banner" id="unlock-banner">
+        <div class="unlock-content">
+          <div class="unlock-icon"><i class="fas fa-lock-open"></i></div>
+          <div class="unlock-text">
+            <h3>Unlock the Full Course</h3>
+            <p>Get lifetime access to all modules, source code, and certificate of completion.</p>
+          </div>
+          <div class="unlock-price" id="unlock-price"></div>
+          <button class="btn btn-primary unlock-btn" id="unlock-btn" onclick="openPayment()">
+            <i class="fas fa-bolt"></i> Enroll Now
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════ PAYMENT MODAL ═══════════ -->
+  <div class="modal-overlay" id="modal-overlay" onclick="closePayment()"></div>
+  <div class="payment-modal" id="payment-modal">
+    <button class="modal-close" onclick="closePayment()"><i class="fas fa-times"></i></button>
+
+    <!-- ── Step 1: Enrollment details ── -->
+    <div class="modal-step" id="modal-step-1">
+      <div class="modal-header">
+        <div class="modal-icon"><i class="fas fa-graduation-cap"></i></div>
+        <h2>Complete Enrollment</h2>
+        <p id="modal-course-name"></p>
+      </div>
+
+      <div class="modal-price-box">
+        <span class="modal-original-price" id="modal-original"></span>
+        <span class="modal-final-price" id="modal-price"></span>
+        <span class="modal-badge">Limited Offer</span>
+      </div>
+
+      <ul class="modal-features">
+        <li><i class="fas fa-check"></i> Lifetime access to all modules</li>
+        <li><i class="fas fa-check"></i> Downloadable source code &amp; notes</li>
+        <li><i class="fas fa-check"></i> Certificate of completion</li>
+        <li><i class="fas fa-check"></i> Doubt-clearing sessions</li>
+        <li><i class="fas fa-check"></i> Private community access</li>
+      </ul>
+
+      <button class="btn btn-primary full-width pay-btn" onclick="showUpiStep()">
+        <i class="fas fa-bolt"></i> Pay &amp; Unlock Course
+      </button>
+
+      <p class="modal-note">
+        <i class="fas fa-shield-alt"></i> UPI payment · Access confirmed within 24 hrs ·
+        <a href="mailto:duke.lavlesh@gmail.com">Need help?</a>
+      </p>
+    </div>
+
+    <!-- ── Step 2: UPI Payment ── -->
+    <div class="modal-step" id="modal-step-2" style="display:none;">
+
+      <div class="upi-step-header">
+        <button class="upi-back-btn" onclick="showEnrollStep()">
+          <i class="fas fa-arrow-left"></i> Back
+        </button>
+        <h2>Pay via UPI</h2>
+      </div>
+
+      <div class="upi-amount-pill">
+        Pay <strong id="upi-amount-display">₹799</strong>
+      </div>
+
+      <!-- ── QR Code ──
+           REPLACE: put your UPI QR code image at  images/upi-qr.png
+           Generate it free from: PhonePe → Profile → QR Code
+                                   GPay → Payment methods → Show QR
+                                   Paytm → Accept Payments → QR
+      ── -->
+      <div class="upi-qr-box">
+        <img src="images/upi-qr.png"
+             alt="UPI QR Code"
+             class="upi-qr-img"
+             onerror="this.style.display='none';document.getElementById('upi-qr-placeholder').style.display='flex';" />
+        <div class="upi-qr-placeholder" id="upi-qr-placeholder" style="display:none;">
+          <i class="fas fa-qrcode"></i>
+          <span>Add your UPI QR code</span>
+          <small>Replace <code>images/upi-qr.png</code></small>
+        </div>
+        <p class="upi-scan-label">Scan with PhonePe · GPay · Paytm · Any UPI app</p>
+      </div>
+
+      <div class="upi-or-divider"><span>or pay using UPI ID</span></div>
+
+      <div class="upi-id-row">
+        <span class="upi-id-text" id="upi-id-text">your-upi-id@bank</span>
+        <button class="upi-copy-btn" id="upi-copy-btn" onclick="copyUpiId()">
+          <i class="fas fa-copy"></i> Copy
+        </button>
+      </div>
+
+      <ol class="upi-instructions">
+        <li><i class="fas fa-mobile-alt"></i> Open PhonePe, GPay, or Paytm</li>
+        <li><i class="fas fa-qrcode"></i> Scan the QR code or enter the UPI ID above</li>
+        <li><i class="fas fa-rupee-sign"></i> Enter the exact amount and complete payment</li>
+        <li><i class="fas fa-check-circle"></i> Click the button below after paying</li>
+      </ol>
+
+      <button class="btn btn-primary full-width" onclick="handlePayment()">
+        <i class="fas fa-check-circle"></i> I've Paid — Notify Instructor
+      </button>
+
+      <p class="modal-note" style="margin-top:12px;">
+        <i class="fas fa-clock"></i> Send your payment screenshot to
+        <a href="mailto:duke.lavlesh@gmail.com">duke.lavlesh@gmail.com</a> for faster activation.
+        Access will be confirmed within <strong>24 hours</strong>.
+      </p>
+    </div>
+
+  </div>
+
+  <!-- ═══════════ FOOTER ═══════════ -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <a href="index.html" class="footer-brand">
+        <div class="nav-logo-circle footer-logo-circle">
+          <img src="new_logo.png" alt="TechGurukul" class="nav-logo" />
+        </div>
+        <div class="nav-brand-text">
+          <span class="nav-brand-name">TechGurukul</span>
+          <span class="nav-brand-tagline">Recharge Your Learning</span>
+        </div>
+      </a>
+      <nav class="footer-nav">
+        <a href="index.html">Home</a>
+        <a href="index.html#about">About</a>
+        <a href="index.html#services">Services</a>
+        <a href="courses.html">AI Courses</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+      <p class="footer-copy">&copy; <span id="year"></span> TechGurukul. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="js/course-data.js"></script>
+  <script src="js/courses.js"></script>
+</body>
+</html>
