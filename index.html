@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Security: restrict resource origins, block clickjacking, prevent base-tag injection -->
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://cdn.emailjs.com;
+    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com;
+    font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com;
+    img-src 'self' data: https://img.youtube.com https://i.ytimg.com;
+    connect-src 'self' https://api.emailjs.com https://translate.googleapis.com;
+    frame-src https://www.youtube.com;
+    frame-ancestors 'none';
+    base-uri 'self';
+    form-action 'self' mailto:;
+  " />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <title>TechGurukul — Recharge Your Learning</title>
+  <link rel="icon" href="new_logo.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+
+  <!-- ═══════════════════════════ NAVBAR ═══════════════════════════ -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="#home" class="nav-brand">
+        <div class="nav-logo-circle">
+          <img src="new_logo.png" alt="TechGurukul Logo" class="nav-logo" />
+        </div>
+        <div class="nav-brand-text">
+          <span class="nav-brand-name">TechGurukul</span>
+          <span class="nav-brand-tagline">Recharge Your Learning</span>
+        </div>
+      </a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#home" class="nav-link active">Home</a></li>
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#topics" class="nav-link">Topics</a></li>
+        <li><a href="#services" class="nav-link">Services</a></li>
+        <li><a href="courses.html" class="nav-link nav-link-courses">AI Courses</a></li>
+        <li><a href="#videos" class="nav-link">Videos</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════ HERO ═══════════════════════════ -->
+  <section class="hero" id="home">
+
+    <div class="hero-content">
+      <div class="hero-text">
+        <p class="hero-greeting">Hello! I'm</p>
+        <h1 class="hero-name">TechGurukul</h1>
+        <p class="hero-role">AI &amp; Automation Creator</p>
+        <p class="hero-tagline">Recharge Your Learning</p>
+        <div class="hero-actions">
+          <a href="https://www.youtube.com/@techgurukul_in9220" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+            <i class="fab fa-youtube"></i> Watch on YouTube
+          </a>
+          <a href="#contact" class="btn btn-outline">Contact Me</a>
+        </div>
+      </div>
+      <div class="hero-image-wrap">
+        <div class="hero-glow"></div>
+        <img src="my_pics.png" alt="TechGurukul creator" class="hero-photo" />
+        <div class="hero-name-plate">
+          <span class="hero-creator-name">Lavlesh Singh</span>
+          <span class="hero-creator-title"><i class="fas fa-layer-group"></i> Data Architect</span>
+        </div>
+      </div>
+    </div>
+
+    <a href="#about" class="hero-scroll-hint" aria-label="Scroll down">
+      <i class="fas fa-chevron-down"></i>
+    </a>
+  </section>
+
+  <!-- ═══════════════════════════ ABOUT ═══════════════════════════ -->
+  <section class="section about" id="about">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">About Me</span>
+        <h2>Who I Am</h2>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-stats">
+          <div class="stat-card">
+            <span class="stat-number">10K+</span>
+            <span class="stat-label">Subscribers</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number">50+</span>
+            <span class="stat-label">Videos</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number">6</span>
+            <span class="stat-label">Topic Areas</span>
+          </div>
+          <div class="stat-card accent">
+            <span class="stat-number">AI</span>
+            <span class="stat-label">Focused</span>
+          </div>
+        </div>
+
+        <div class="about-bio">
+          <h3>AI &amp; Automation Educator</h3>
+          <p>
+            I create videos on AI tools, automation workflows, and data engineering.
+            Whether you're a beginner or a pro, <strong>TechGurukul</strong> is your
+            learning hub for the future of tech — breaking down complex concepts into
+            practical, actionable knowledge.
+          </p>
+          <p>
+            My mission is simple: <em>Recharge Your Learning</em>. Every video is
+            designed to help you stay ahead in the rapidly evolving world of AI and
+            automation.
+          </p>
+
+          <div class="timeline">
+            <div class="timeline-section">
+              <h4><i class="fas fa-graduation-cap"></i> Education</h4>
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                  <span class="timeline-title">Bachelor of Technology</span>
+                  <span class="timeline-sub">Computer Science &amp; Engineering</span>
+                  <span class="timeline-year">2007 – 2010</span>
+                </div>
+              </div>
+            </div>
+            <div class="timeline-section">
+              <h4><i class="fas fa-briefcase"></i> Experience</h4>
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                  <span class="timeline-title">Data Engineer</span>
+                  <span class="timeline-sub">Tech Industry</span>
+                  <span class="timeline-year">2022 – Present</span>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                  <span class="timeline-title">YouTube Content Creator</span>
+                  <span class="timeline-sub">TechGurukul</span>
+                  <span class="timeline-year">2019 – Present</span>
+                  <div class="tech-pills">
+                    <span class="tech-pill">MCP Server</span>
+                    <span class="tech-pill accent-pill">Claude</span>
+                    <span class="tech-pill accent-pill">LLM</span>
+                    <span class="tech-pill accent-pill">AI</span>
+                    <span class="tech-pill accent-pill">SLM</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ TOPICS ═══════════════════════════ -->
+  <section class="section topics alt-bg" id="topics">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">What I Cover</span>
+        <h2>Content Topics</h2>
+      </div>
+
+      <div class="topics-grid">
+        <div class="topic-card">
+          <div class="topic-icon"><i class="fas fa-robot"></i></div>
+          <h3>AI Tools &amp; Agents</h3>
+          <ul>
+            <li>LLM Applications</li>
+            <li>AI Agents</li>
+            <li>Prompt Engineering</li>
+            <li>ChatGPT &amp; Gemini</li>
+          </ul>
+        </div>
+        <div class="topic-card">
+          <div class="topic-icon"><i class="fas fa-gears"></i></div>
+          <h3>Automation Workflows</h3>
+          <ul>
+            <li>n8n &amp; Make</li>
+            <li>Zapier Flows</li>
+            <li>RPA Basics</li>
+            <li>Task Scheduling</li>
+          </ul>
+        </div>
+        <div class="topic-card">
+          <div class="topic-icon"><i class="fas fa-database"></i></div>
+          <h3>Data Engineering</h3>
+          <ul>
+            <li>ETL Pipelines</li>
+            <li>SQL &amp; NoSQL</li>
+            <li>Apache Spark</li>
+            <li>Data Warehousing</li>
+          </ul>
+        </div>
+        <div class="topic-card">
+          <div class="topic-icon"><i class="fab fa-python"></i></div>
+          <h3>Python Programming</h3>
+          <ul>
+            <li>Scripting &amp; Automation</li>
+            <li>Libraries Deep Dive</li>
+            <li>API Integration</li>
+            <li>Best Practices</li>
+          </ul>
+        </div>
+        <div class="topic-card">
+          <div class="topic-icon"><i class="fas fa-brain"></i></div>
+          <h3>Machine Learning</h3>
+          <ul>
+            <li>Model Training</li>
+            <li>Feature Engineering</li>
+            <li>scikit-learn</li>
+            <li>Model Deployment</li>
+          </ul>
+        </div>
+        <div class="topic-card">
+          <div class="topic-icon"><i class="fas fa-rocket"></i></div>
+          <h3>Career in Tech</h3>
+          <ul>
+            <li>Resume Tips</li>
+            <li>Interview Prep</li>
+            <li>Freelancing</li>
+            <li>Roadmaps</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ SERVICES ═══════════════════════════ -->
+  <section class="section services-section" id="services">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">What We Offer</span>
+        <h2>Our Services</h2>
+        <p class="section-desc">From training to building — we help you grow in the AI-driven tech world.</p>
+      </div>
+
+      <div class="services-grid">
+
+        <div class="service-card">
+          <div class="service-icon"><i class="fas fa-laptop-code"></i></div>
+          <div class="service-body">
+            <h3>Online Training</h3>
+            <p>Live &amp; recorded training on all demanding technologies — tailored for beginners and professionals.</p>
+          </div>
+          <span class="service-tag">Training</span>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon"><i class="fas fa-user-tie"></i></div>
+          <div class="service-body">
+            <h3>Corporate Trainers</h3>
+            <p>Experienced trainers available for corporate upskilling programs on latest tech stacks.</p>
+          </div>
+          <span class="service-tag">Corporate</span>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon"><i class="fas fa-headset"></i></div>
+          <div class="service-body">
+            <h3>Job Support</h3>
+            <p>One-on-one technical job support for each technology to help you succeed on the job.</p>
+          </div>
+          <span class="service-tag">Support</span>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon"><i class="fas fa-code"></i></div>
+          <div class="service-body">
+            <h3>Portfolio &amp; CRM Apps</h3>
+            <p>Custom portfolio websites and CRM applications built to showcase your brand professionally.</p>
+          </div>
+          <span class="service-tag">Development</span>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon"><i class="fas fa-file-alt"></i></div>
+          <div class="service-body">
+            <h3>Resume &amp; Interview Prep</h3>
+            <p>ATS-optimized resume building and mock interview preparation to land your dream job.</p>
+          </div>
+          <span class="service-tag">Career</span>
+        </div>
+
+        <div class="service-card highlight-card">
+          <div class="service-icon"><i class="fas fa-robot"></i></div>
+          <div class="service-body">
+            <h3>AI Training &amp; Agents</h3>
+            <p>Hands-on AI training and building intelligent AI agents using the latest LLM frameworks.</p>
+          </div>
+          <span class="service-tag">AI</span>
+        </div>
+
+        <div class="service-card highlight-card">
+          <div class="service-icon"><i class="fas fa-sun"></i></div>
+          <div class="service-body">
+            <h3>Summer Bootcamp</h3>
+            <p>Intensive bootcamp on AI projects — build real websites and agents from scratch in weeks.</p>
+          </div>
+          <span class="service-tag">Bootcamp</span>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon"><i class="fas fa-film"></i></div>
+          <div class="service-body">
+            <h3>Content Creation</h3>
+            <p>End-to-end content creation support for YouTube, blogs, and tech-focused social media.</p>
+          </div>
+          <span class="service-tag">Content</span>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon"><i class="fas fa-share-nodes"></i></div>
+          <div class="service-body">
+            <h3>Social Media Automation</h3>
+            <p>Automate your social media presence with AI-powered workflows and scheduling tools.</p>
+          </div>
+          <span class="service-tag">Automation</span>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon"><i class="fas fa-medal"></i></div>
+          <div class="service-body">
+            <h3>Freelancing &amp; Branding</h3>
+            <p>Build your personal brand, start freelancing, and monetize your tech skills effectively.</p>
+          </div>
+          <span class="service-tag">Branding</span>
+        </div>
+
+      </div>
+
+      <div class="services-cta">
+        <p>Interested in any service?</p>
+        <a href="#contact" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Get In Touch</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ FEATURED VIDEOS ═══════════════════════════ -->
+  <section class="section videos" id="videos">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Featured Content</span>
+        <h2>Latest Videos</h2>
+        <p class="section-desc">
+          Handpicked tutorials to get you started — replace the video IDs below with your real ones.
+        </p>
+      </div>
+
+      <div class="videos-grid">
+        <div class="video-card">
+          <a href="https://www.youtube.com/watch?v=lDfAZZj35LQ" target="_blank" rel="noopener noreferrer" class="video-thumb-link">
+            <img src="https://img.youtube.com/vi/lDfAZZj35LQ/hqdefault.jpg" alt="AI Automation for Beginners" class="video-thumb" loading="lazy" />
+            <div class="play-overlay"><i class="fab fa-youtube"></i></div>
+          </a>
+          <div class="video-info">
+            <h3>AI Automation for Beginners</h3>
+            <p>Learn how to build your first AI-powered automation workflow from scratch.</p>
+            <a href="https://www.youtube.com/watch?v=lDfAZZj35LQ" target="_blank" rel="noopener noreferrer" class="btn btn-sm">
+              <i class="fas fa-play"></i> Watch Now
+            </a>
+          </div>
+        </div>
+
+        <div class="video-card">
+          <a href="https://www.youtube.com/watch?v=MxKfgSaTW-I&t=117s" target="_blank" rel="noopener noreferrer" class="video-thumb-link">
+            <img src="https://img.youtube.com/vi/MxKfgSaTW-I/hqdefault.jpg" alt="Data Engineering Pipeline Tutorial" class="video-thumb" loading="lazy" />
+            <div class="play-overlay"><i class="fab fa-youtube"></i></div>
+          </a>
+          <div class="video-info">
+            <h3>Data Engineering Pipeline Tutorial</h3>
+            <p>End-to-end ETL pipeline using Python and modern cloud tools.</p>
+            <a href="https://www.youtube.com/watch?v=MxKfgSaTW-I&t=117s" target="_blank" rel="noopener noreferrer" class="btn btn-sm">
+              <i class="fas fa-play"></i> Watch Now
+            </a>
+          </div>
+        </div>
+
+        <div class="video-card">
+          <a href="https://www.youtube.com/watch?v=m68IMTB1ZkQ&t=103s" target="_blank" rel="noopener noreferrer" class="video-thumb-link">
+            <img src="https://img.youtube.com/vi/m68IMTB1ZkQ/hqdefault.jpg" alt="Build an AI Agent in Python" class="video-thumb" loading="lazy" />
+            <div class="play-overlay"><i class="fab fa-youtube"></i></div>
+          </a>
+          <div class="video-info">
+            <h3>Build an AI Agent in Python</h3>
+            <p>Step-by-step guide to creating intelligent agents using LLMs and tools.</p>
+            <a href="https://www.youtube.com/watch?v=m68IMTB1ZkQ&t=103s" target="_blank" rel="noopener noreferrer" class="btn btn-sm">
+              <i class="fas fa-play"></i> Watch Now
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="videos-cta">
+        <a href="https://www.youtube.com/@techgurukul_in9220" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+          <i class="fab fa-youtube"></i> View All Videos
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ CONTACT ═══════════════════════════ -->
+  <section class="section contact alt-bg" id="contact">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Get In Touch</span>
+        <h2>Let's Collaborate</h2>
+        <p class="section-desc">
+          Interested in sponsoring a video, partnering on a project, or just saying hi?
+          Fill out the form and I'll get back to you.
+        </p>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-info">
+          <h3>Open for</h3>
+          <ul class="collab-list">
+            <li><i class="fas fa-handshake"></i> Brand Sponsorships</li>
+            <li><i class="fas fa-video"></i> Sponsored Videos</li>
+            <li><i class="fas fa-chalkboard-teacher"></i> Workshop / Webinar</li>
+            <li><i class="fas fa-link"></i> Affiliate Partnerships</li>
+            <li><i class="fas fa-comments"></i> Podcast / Interview</li>
+          </ul>
+
+          <div class="contact-socials">
+            <h4>Find me on</h4>
+            <div class="social-links">
+              <a href="https://www.youtube.com/@techgurukul_in9220" target="_blank" rel="noopener noreferrer"
+                class="social-btn youtube" aria-label="YouTube">
+                <i class="fab fa-youtube"></i>
+              </a>
+              <a href="https://www.facebook.com/profile.php?id=100063966523167" target="_blank" rel="noopener noreferrer"
+                class="social-btn facebook" aria-label="Facebook">
+                <i class="fab fa-facebook-f"></i>
+              </a>
+              <a href="https://www.linkedin.com/feed/" target="_blank" rel="noopener noreferrer" class="social-btn linkedin"
+                aria-label="LinkedIn">
+                <i class="fab fa-linkedin-in"></i>
+              </a>
+              <a href="https://medium.com/@duke-lavlesh" target="_blank" rel="noopener noreferrer" class="social-btn medium" aria-label="Medium">
+                <i class="fab fa-medium"></i>
+              </a>
+              <a href="mailto:duke.lavlesh@gmail.com" class="social-btn email" aria-label="Email">
+                <i class="fas fa-envelope"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <form class="contact-form" id="contact-form" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Your Name</label>
+              <input type="text" id="name" name="name" placeholder="John Doe" required />
+            </div>
+            <div class="form-group">
+              <label for="email">Your Email</label>
+              <input type="email" id="email" name="email" placeholder="john@company.com" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="subject">Subject</label>
+            <select id="subject" name="subject" required>
+              <option value="" disabled selected>Select a topic…</option>
+              <option value="Sponsorship">Sponsorship</option>
+              <option value="Collaboration">Collaboration</option>
+              <option value="Affiliate">Affiliate Partnership</option>
+              <option value="General">General Inquiry</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5"
+              placeholder="Tell me about your brand and what you have in mind…" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary full-width">
+            <i class="fas fa-paper-plane"></i> Send Message
+          </button>
+          <p class="form-note" id="form-status"></p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════ FOOTER ═══════════════════════════ -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <a href="#home" class="footer-brand">
+        <div class="nav-logo-circle footer-logo-circle">
+          <img src="new_logo.png" alt="TechGurukul" class="nav-logo" />
+        </div>
+        <div class="nav-brand-text">
+          <span class="nav-brand-name">TechGurukul</span>
+          <span class="nav-brand-tagline">Recharge Your Learning</span>
+        </div>
+      </a>
+      <nav class="footer-nav">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#topics">Topics</a>
+        <a href="#services">Services</a>
+        <a href="#videos">Videos</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <p class="footer-copy">&copy; <span id="year"></span> TechGurukul. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+
+</html>
