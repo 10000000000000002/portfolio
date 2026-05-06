@@ -4,10 +4,13 @@
 
 let currentPhone = '';
 
+const ALL_STEPS = ['step-phone','step-register','step-enrolled','step-confirm','step-demo','step-demo-confirm'];
+
 /* ─── Show a step, hide others ─── */
 function showStep(id) {
-  ['step-phone','step-register','step-enrolled','step-confirm'].forEach(s => {
-    document.getElementById(s).style.display = s === id ? 'block' : 'none';
+  ALL_STEPS.forEach(s => {
+    const el = document.getElementById(s);
+    if (el) el.style.display = s === id ? 'block' : 'none';
   });
 }
 
@@ -39,7 +42,9 @@ window.checkPhone = async function () {
   document.querySelector('#step-phone .login-btn').disabled = false;
 
   if (!reg) {
-    /* New user — show registration form */
+    /* New user — show registration form, pre-fill phone field */
+    const phoneField = document.getElementById('reg-phone');
+    if (phoneField) phoneField.value = phone; /* already stripped of +91 */
     showStep('step-register');
     document.getElementById('reg-name').focus();
     return;
@@ -115,13 +120,19 @@ window.registerStudent = async function () {
   const name   = nameEl.value.trim();
   const course = courseEl.value;
 
-  if (!name)   { errEl.textContent = 'Please enter your full name.';       return; }
-  if (!course) { errEl.textContent = 'Please select the course you want.'; return; }
+  /* Phone may come from step-1 or from the inline field (direct Register click) */
+  const phoneField = document.getElementById('reg-phone');
+  if (!currentPhone && phoneField && phoneField.value.trim()) {
+    currentPhone = '+91' + phoneField.value.trim();
+  }
+
+  if (!currentPhone) { errEl.textContent = 'Please enter your phone number.'; return; }
+  if (!name)         { errEl.textContent = 'Please enter your full name.';     return; }
+  if (!course)       { errEl.textContent = 'Please select the course you want.'; return; }
 
   btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving…';
   document.querySelector('#step-register .login-btn').disabled = true;
 
-  /* Check again in case they registered between steps */
   let existing = await fsReadRegistration(currentPhone) || {};
 
   const data = {
@@ -156,16 +167,78 @@ function showToastLogin(msg) {
   setTimeout(() => t.classList.remove('show'), 3000);
 }
 
+/* ─── Book Demo Class ─── */
+window.bookDemo = async function () {
+  const nameEl     = document.getElementById('demo-name');
+  const courseEl   = document.getElementById('demo-course');
+  const datetimeEl = document.getElementById('demo-datetime');
+  const errEl      = document.getElementById('demo-error');
+  const btn        = document.getElementById('demo-btn-text');
+
+  errEl.textContent = '';
+
+  const name     = nameEl.value.trim();
+  const course   = courseEl.value;
+  const datetime = datetimeEl.value.trim();
+
+  if (!name)   { errEl.textContent = 'Please enter your full name.';       return; }
+  if (!course) { errEl.textContent = 'Please select an interested course.'; return; }
+
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Booking…';
+  document.querySelector('#step-demo .login-btn').disabled = true;
+
+  const phone = currentPhone || 'not provided';
+  const data  = {
+    name,
+    phone,
+    demoRequest: true,
+    demoCourse:  course,
+    demoDatetime: datetime || 'flexible',
+    registeredAt: new Date().toISOString(),
+  };
+
+  /* Save as registration with demoRequest flag */
+  if (phone !== 'not provided') {
+    const existing = await fsReadRegistration(phone) || {};
+    await fsWriteRegistration(phone, { ...existing, ...data });
+  } else {
+    /* No phone yet — save under a temp key */
+    await fsWriteRegistration('demo_' + Date.now(), data);
+  }
+
+  btn.innerHTML = '<i class="fas fa-calendar-check"></i> Book Demo Class';
+  document.querySelector('#step-demo .login-btn').disabled = false;
+
+  const confirmPhone = document.getElementById('demo-confirm-phone');
+  if (confirmPhone) confirmPhone.textContent = phone !== 'not provided' ? phone : name;
+
+  showStep('step-demo-confirm');
+};
+
 /* ─── Init ─── */
 document.addEventListener('DOMContentLoaded', () => {
-  showStep('step-phone');
-  document.getElementById('phone-input').focus();
+  const mode = new URLSearchParams(window.location.search).get('mode');
 
-  /* Allow Enter key on phone field */
+  if (mode === 'register') {
+    /* Skip phone step — go straight to register form (phone optional) */
+    showStep('step-register');
+    document.getElementById('reg-name').focus();
+  } else if (mode === 'demo') {
+    showStep('step-demo');
+    document.getElementById('demo-name').focus();
+  } else {
+    showStep('step-phone');
+    document.getElementById('phone-input').focus();
+  }
+
+  /* Enter key shortcuts */
   document.getElementById('phone-input').addEventListener('keydown', e => {
     if (e.key === 'Enter') window.checkPhone();
   });
   document.getElementById('reg-name').addEventListener('keydown', e => {
     if (e.key === 'Enter') window.registerStudent();
+  });
+  document.getElementById('demo-name').addEventListener('keydown', e => {
+    if (e.key === 'Enter') window.bookDemo();
   });
 });

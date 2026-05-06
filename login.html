@@ -101,6 +101,14 @@
         <h2 class="login-heading">Create your account</h2>
         <p class="login-subtext">Fill in your details to register. We'll verify your payment and activate your course.</p>
 
+        <label class="login-label">Phone Number</label>
+        <div class="phone-row" style="margin-bottom:14px;">
+          <div class="phone-flag-box"><span>🇮🇳</span><span class="phone-code">+91</span></div>
+          <input type="tel" id="reg-phone" class="login-input phone-input"
+                 placeholder="10-digit mobile number" maxlength="10"
+                 oninput="this.value=this.value.replace(/\D/g,'')" />
+        </div>
+
         <label class="login-label">Full Name</label>
         <input type="text" id="reg-name" class="login-input" placeholder="e.g. Rahul Sharma" />
 
@@ -140,6 +148,65 @@
 
         <a href="courses.html" class="login-btn" style="display:flex;justify-content:center;text-decoration:none;margin-top:16px;">
           <i class="fas fa-graduation-cap"></i> Browse All Courses
+        </a>
+      </div>
+
+      <!-- ── STEP 5: Book Demo Class ── -->
+      <div id="step-demo" style="display:none;">
+        <button class="login-back-btn" onclick="goBack('step-phone')">
+          <i class="fas fa-arrow-left"></i> Back
+        </button>
+
+        <h2 class="login-heading">Book a Free Demo Class</h2>
+        <p class="login-subtext">Fill in your details and we'll schedule a free demo session for you.</p>
+
+        <label class="login-label">Full Name</label>
+        <input type="text" id="demo-name" class="login-input" placeholder="e.g. Rahul Sharma" />
+
+        <label class="login-label" style="margin-top:14px;">Interested Course</label>
+        <div class="login-select-wrap">
+          <select id="demo-course" class="login-select">
+            <option value="">— Select a course —</option>
+            <option value="foundation">Foundation Track (Class 5–8)</option>
+            <option value="intermediate">Intermediate Track (Class 9–12)</option>
+            <option value="advanced">Advanced Track (College)</option>
+            <option value="professional">Professional Track (Working)</option>
+          </select>
+          <i class="fas fa-chevron-down login-select-arrow"></i>
+        </div>
+
+        <label class="login-label" style="margin-top:14px;">Preferred Date &amp; Time <span style="font-weight:400;color:var(--text-muted);">(optional)</span></label>
+        <input type="text" id="demo-datetime" class="login-input"
+               placeholder="e.g. Saturday morning, 10–11 AM" />
+
+        <p class="login-error" id="demo-error"></p>
+
+        <button class="login-btn" onclick="bookDemo()">
+          <span id="demo-btn-text"><i class="fas fa-calendar-check"></i> Book Demo Class</span>
+        </button>
+
+        <p class="login-note">
+          <i class="fas fa-phone-alt"></i> We'll call or WhatsApp you to confirm the demo session.
+        </p>
+      </div>
+
+      <!-- ── STEP 6: Demo booking confirmation ── -->
+      <div id="step-demo-confirm" style="display:none;">
+        <div class="login-success-icon">
+          <i class="fas fa-calendar-check"></i>
+        </div>
+        <h2 class="login-heading">Demo Booked!</h2>
+        <p class="login-subtext">
+          Thanks! We've received your demo class request. We'll contact you on
+          <strong id="demo-confirm-phone"></strong> to confirm the time.
+        </p>
+        <ol class="confirm-steps">
+          <li><i class="fas fa-phone-alt"></i> Expect a call/WhatsApp within <strong>24 hours</strong></li>
+          <li><i class="fas fa-video"></i> Demo is <strong>free</strong> — no payment needed</li>
+          <li><i class="fas fa-bolt"></i> After demo, enroll at a <strong>special discount</strong></li>
+        </ol>
+        <a href="courses.html" class="login-btn" style="display:flex;justify-content:center;text-decoration:none;margin-top:20px;">
+          <i class="fas fa-arrow-right"></i> Explore Courses
         </a>
       </div>
 
