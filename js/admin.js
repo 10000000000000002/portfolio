@@ -273,17 +273,27 @@ async function loadRegistrations() {
   const tierKeys = Object.keys(TIERS);
 
   const rows = regs.flatMap(reg => {
-    const interestedTiers = tierKeys.filter(t => reg[t]);
+    const interestedTiers = tierKeys.filter(t => reg[t] && t !== 'demoRequest');
     const date = reg.registeredAt
       ? new Date(reg.registeredAt).toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' })
       : '—';
-    const phone = reg.id || reg.phone || '—';
+    const phone    = reg.id || reg.phone || '—';
+    const isDemo   = !!reg.demoRequest;
+    const demoSlot = reg.demoDatetime && reg.demoDatetime !== 'flexible'
+      ? escAdminHtml(reg.demoDatetime) : '—';
 
+    /* Demo booking with no enrolled tier */
     if (!interestedTiers.length) {
+      const courseLabel = isDemo && reg.demoCourse && TIERS[reg.demoCourse]
+        ? `<span style="font-weight:600;">${escAdminHtml(TIERS[reg.demoCourse].label)}</span>
+           <br><small style="color:#60a5fa;"><i class="fas fa-video"></i> Demo request</small>`
+        : '<span style="color:var(--text-muted);">—</span>';
+
       return [`<tr>
         <td style="font-weight:600;color:var(--text-primary);">${escAdminHtml(reg.name||'—')}</td>
-        <td style="font-family:monospace;">${escAdminHtml(phone)}</td>
-        <td style="color:var(--text-muted);">—</td>
+        <td style="font-family:monospace;font-size:0.8rem;">${escAdminHtml(phone)}</td>
+        <td>${courseLabel}</td>
+        <td style="color:var(--text-muted);font-size:0.8rem;">${demoSlot}</td>
         <td style="color:var(--text-muted);">${date}</td>
         <td><span class="reg-status-badge pending"><i class="fas fa-clock"></i> Pending</span></td>
         <td><button class="reg-delete-btn" onclick="deleteRegistration('${escAdminHtml(phone)}')"><i class="fas fa-trash"></i></button></td>
@@ -293,11 +303,15 @@ async function loadRegistrations() {
     return interestedTiers.map(t => {
       const status  = reg[t];
       const tierObj = TIERS[t];
+      const courseLabel = `<span style="font-weight:600;">${escAdminHtml(tierObj.label)}</span>
+          <br><small style="color:var(--text-muted);">${escAdminHtml(tierObj.class)}</small>
+          ${isDemo ? '<br><small style="color:#60a5fa;"><i class="fas fa-video"></i> Demo requested</small>' : ''}`;
+
       return `<tr>
         <td style="font-weight:600;color:var(--text-primary);">${escAdminHtml(reg.name||'—')}</td>
-        <td style="font-family:monospace;">${escAdminHtml(phone)}</td>
-        <td><span style="font-weight:600;">${escAdminHtml(tierObj.label)}</span>
-            <br><small style="color:var(--text-muted);">${escAdminHtml(tierObj.class)}</small></td>
+        <td style="font-family:monospace;font-size:0.8rem;">${escAdminHtml(phone)}</td>
+        <td>${courseLabel}</td>
+        <td style="color:var(--text-muted);font-size:0.8rem;">${demoSlot}</td>
         <td style="color:var(--text-muted);">${date}</td>
         <td><span class="reg-status-badge ${status}">
           <i class="fas ${status==='verified'?'fa-check-circle':'fa-clock'}"></i>
@@ -318,7 +332,7 @@ async function loadRegistrations() {
       <table class="reg-table">
         <thead><tr>
           <th>Name</th><th>Phone</th><th>Course</th>
-          <th>Registered</th><th>Status</th><th>Actions</th>
+          <th>Demo Slot</th><th>Registered</th><th>Status</th><th>Actions</th>
         </tr></thead>
         <tbody>${rows.join('')}</tbody>
       </table>

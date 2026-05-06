@@ -244,6 +244,7 @@ window.registerStudent = async function () {
 /* ─── Book Demo Class ─── */
 window.bookDemo = async function () {
   const nameEl     = document.getElementById('demo-name');
+  const phoneEl    = document.getElementById('demo-phone');
   const courseEl   = document.getElementById('demo-course');
   const datetimeEl = document.getElementById('demo-datetime');
   const errEl      = document.getElementById('demo-error');
@@ -252,36 +253,36 @@ window.bookDemo = async function () {
   errEl.textContent = '';
 
   const name     = nameEl.value.trim();
+  const rawPhone = phoneEl.value.trim();
   const course   = courseEl.value;
   const datetime = datetimeEl.value.trim();
 
-  if (!name)   { errEl.textContent = 'Please enter your full name.';        return; }
-  if (!course) { errEl.textContent = 'Please select an interested course.'; return; }
+  if (!name)                        { errEl.textContent = 'Please enter your full name.';              return; }
+  if (!/^\d{10}$/.test(rawPhone))   { errEl.textContent = 'Please enter a valid 10-digit mobile number.'; return; }
+  if (!course)                      { errEl.textContent = 'Please select an interested course.';       return; }
 
   btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Booking…';
   document.querySelector('#step-demo .login-btn').disabled = true;
 
-  const phone = currentPhone || 'not provided';
+  const phone = '+91' + rawPhone;
   const data  = {
-    name, phone,
+    name,
+    phone,
     demoRequest:  true,
     demoCourse:   course,
     demoDatetime: datetime || 'flexible',
     registeredAt: new Date().toISOString(),
   };
 
-  if (phone !== 'not provided') {
-    const existing = await fsReadRegistration(phone) || {};
-    await fsWriteRegistration(phone, { ...existing, ...data });
-  } else {
-    await fsWriteRegistration('demo_' + Date.now(), data);
-  }
+  /* Use phone number as the document key so it shows properly in admin */
+  const existing = await fsReadRegistration(phone) || {};
+  await fsWriteRegistration(phone, { ...existing, ...data });
 
   btn.innerHTML = '<i class="fas fa-calendar-check"></i> Book Demo Class';
   document.querySelector('#step-demo .login-btn').disabled = false;
 
   const el = document.getElementById('demo-confirm-phone');
-  if (el) el.textContent = phone !== 'not provided' ? phone : name;
+  if (el) el.textContent = phone;
 
   showStep('step-demo-confirm');
 };

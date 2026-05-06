@@ -186,6 +186,14 @@
         <label class="login-label">Full Name</label>
         <input type="text" id="demo-name" class="login-input" placeholder="e.g. Rahul Sharma" />
 
+        <label class="login-label" style="margin-top:14px;">Mobile Number</label>
+        <div class="phone-row">
+          <div class="phone-flag-box"><span>🇮🇳</span><span class="phone-code">+91</span></div>
+          <input type="tel" id="demo-phone" class="login-input phone-input"
+                 placeholder="10-digit mobile number" maxlength="10"
+                 oninput="this.value=this.value.replace(/\D/g,'')" />
+        </div>
+
         <label class="login-label" style="margin-top:14px;">Interested Course</label>
         <div class="login-select-wrap">
           <select id="demo-course" class="login-select">
