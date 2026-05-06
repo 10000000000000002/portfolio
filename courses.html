@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="Content-Security-Policy" content="
     default-src 'self';
-    script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com;
+    script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://www.gstatic.com;
     style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com;
     font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com;
     img-src 'self' data:;
-    connect-src 'self';
+    connect-src 'self' https://*.googleapis.com https://*.firebaseio.com https://*.firebase.google.com wss://*.firebaseio.com;
     frame-ancestors 'none';
     base-uri 'self';
     form-action 'self' mailto:;
@@ -45,6 +45,10 @@
         <li><a href="courses.html" class="nav-link active nav-link-courses">AI Courses</a></li>
         <li><a href="index.html#contact" class="nav-link">Contact</a></li>
       </ul>
+      <a href="login.html" class="btn btn-primary" id="nav-login-btn"
+         style="padding:8px 18px;font-size:0.82rem;flex-shrink:0;">
+        <i class="fas fa-user"></i> Login
+      </a>
       <button class="hamburger" id="hamburger" aria-label="Toggle menu">
         <span></span><span></span><span></span>
       </button>
@@ -367,7 +371,10 @@
     </div>
   </footer>
 
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
   <script src="js/course-data.js"></script>
+  <script src="js/firebase-config.js"></script>
   <script src="js/courses.js"></script>
 </body>
 </html>

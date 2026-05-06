@@ -90,3 +90,61 @@ async function fsDelete(postKey) {
   if (!db) return;
   try { await db.collection('posts').doc(postKey).delete(); } catch { }
 }
+
+/* ═══════════════════════════════════════════════
+   REGISTRATION HELPERS
+   Collection: 'registrations'
+   Document ID: phone number e.g. "+919876543210"
+═══════════════════════════════════════════════ */
+
+async function fsWriteRegistration(phone, data) {
+  const db = getDb();
+  if (!db) return false;
+  try {
+    await db.collection('registrations').doc(phone).set(data, { merge: true });
+    return true;
+  } catch (e) {
+    console.error('Registration write failed:', e);
+    return false;
+  }
+}
+
+async function fsReadRegistration(phone) {
+  const db = getDb();
+  if (!db) return null;
+  try {
+    const snap = await db.collection('registrations').doc(phone).get();
+    return snap.exists ? snap.data() : null;
+  } catch { return null; }
+}
+
+async function fsReadAllRegistrations() {
+  const db = getDb();
+  if (!db) return null;
+  try {
+    const snap = await db.collection('registrations').get();
+    const out  = [];
+    snap.forEach(d => out.push({ id: d.id, ...d.data() }));
+    /* Sort by registeredAt descending */
+    out.sort((a, b) => (b.registeredAt || '').localeCompare(a.registeredAt || ''));
+    return out;
+  } catch { return null; }
+}
+
+async function fsVerifyRegistration(phone, tierKey) {
+  const db = getDb();
+  if (!db) return false;
+  try {
+    await db.collection('registrations').doc(phone).set(
+      { [tierKey]: 'verified', verifiedAt: new Date().toISOString() },
+      { merge: true }
+    );
+    return true;
+  } catch { return false; }
+}
+
+async function fsDeleteRegistration(phone) {
+  const db = getDb();
+  if (!db) return;
+  try { await db.collection('registrations').doc(phone).delete(); } catch { }
+}

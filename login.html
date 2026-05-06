@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'self' 'unsafe-inline' https://www.gstatic.com;
+    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com;
+    font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com;
+    img-src 'self' data: blob:;
+    connect-src 'self' https://*.googleapis.com https://*.firebaseio.com https://*.firebase.google.com wss://*.firebaseio.com;
+    frame-ancestors 'none';
+    base-uri 'self';
+    form-action 'self';
+  " />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <title>Login — TechGurukul</title>
+  <link rel="icon" href="new_logo.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/login.css" />
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+</head>
+<body class="login-page">
+
+  <!-- ═══════════ NAVBAR ═══════════ -->
+  <nav class="navbar scrolled" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-brand">
+        <div class="nav-logo-circle">
+          <img src="new_logo.png" alt="TechGurukul Logo" class="nav-logo" />
+        </div>
+        <div class="nav-brand-text">
+          <span class="nav-brand-name">TechGurukul</span>
+          <span class="nav-brand-tagline">Recharge Your Learning</span>
+        </div>
+      </a>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <a href="courses.html" class="btn" style="padding:8px 16px;font-size:0.82rem;">
+          <i class="fas fa-arrow-left"></i> Back to Courses
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ═══════════ LOGIN WRAP ═══════════ -->
+  <div class="login-wrap">
+
+    <!-- Decorative blobs -->
+    <div class="login-blob login-blob-1"></div>
+    <div class="login-blob login-blob-2"></div>
+
+    <div class="login-card">
+
+      <!-- Logo -->
+      <div class="login-brand">
+        <div class="nav-logo-circle" style="width:52px;height:52px;">
+          <img src="new_logo.png" alt="TechGurukul" class="nav-logo" />
+        </div>
+        <span class="nav-brand-name" style="font-size:1.1rem;">TechGurukul</span>
+      </div>
+
+      <!-- ── STEP 1: Phone entry ── -->
+      <div id="step-phone">
+        <h2 class="login-heading">Let's get started</h2>
+        <p class="login-subtext">Enter your phone number to register or check your enrollment status.</p>
+
+        <label class="login-label">Enter your phone number</label>
+        <div class="phone-row">
+          <div class="phone-flag-box">
+            <span>🇮🇳</span>
+            <span class="phone-code">+91</span>
+          </div>
+          <input type="tel" id="phone-input" class="login-input phone-input"
+                 placeholder="10-digit mobile number" maxlength="10"
+                 oninput="this.value=this.value.replace(/\D/g,'')" />
+        </div>
+        <p class="login-error" id="phone-error"></p>
+
+        <button class="login-btn" onclick="checkPhone()">
+          <span id="phone-btn-text">Continue</span>
+          <i class="fas fa-arrow-right"></i>
+        </button>
+
+        <p class="login-note">
+          <i class="fas fa-lock"></i> Your number is only used to verify enrollment. We never share it.
+        </p>
+      </div>
+
+      <!-- ── STEP 2: Registration (new student) ── -->
+      <div id="step-register" style="display:none;">
+        <button class="login-back-btn" onclick="goBack('step-phone')">
+          <i class="fas fa-arrow-left"></i> Change number
+        </button>
+
+        <h2 class="login-heading">Create your account</h2>
+        <p class="login-subtext">Fill in your details to register. We'll verify your payment and activate your course.</p>
+
+        <label class="login-label">Full Name</label>
+        <input type="text" id="reg-name" class="login-input" placeholder="e.g. Rahul Sharma" />
+
+        <label class="login-label" style="margin-top:14px;">Interested Course</label>
+        <div class="login-select-wrap">
+          <select id="reg-course" class="login-select">
+            <option value="">— Select a course —</option>
+            <option value="foundation">Foundation Track (Class 5–8) — ₹999</option>
+            <option value="intermediate">Intermediate Track (Class 9–12) — ₹1,499</option>
+            <option value="advanced">Advanced Track (College) — ₹2,499</option>
+            <option value="professional">Professional Track (Working) — ₹3,499</option>
+          </select>
+          <i class="fas fa-chevron-down login-select-arrow"></i>
+        </div>
+
+        <p class="login-error" id="reg-error"></p>
+
+        <button class="login-btn" onclick="registerStudent()">
+          <span id="reg-btn-text"><i class="fas fa-user-plus"></i> Register</span>
+        </button>
+
+        <p class="login-note">
+          After registering, pay via UPI on the courses page and send your screenshot to
+          <strong>duke.lavlesh@gmail.com</strong>. We'll activate your course within 24 hours.
+        </p>
+      </div>
+
+      <!-- ── STEP 3: Enrolled student dashboard ── -->
+      <div id="step-enrolled" style="display:none;">
+        <div class="login-success-icon">
+          <i class="fas fa-check-circle"></i>
+        </div>
+        <h2 class="login-heading" id="enrolled-greeting">Welcome back!</h2>
+        <p class="login-subtext" id="enrolled-subtext">Your enrolled courses are listed below.</p>
+
+        <div id="enrolled-courses-list"></div>
+
+        <a href="courses.html" class="login-btn" style="display:flex;justify-content:center;text-decoration:none;margin-top:16px;">
+          <i class="fas fa-graduation-cap"></i> Browse All Courses
+        </a>
+      </div>
+
+      <!-- ── STEP 4: Registration confirmation ── -->
+      <div id="step-confirm" style="display:none;">
+        <div class="login-success-icon pending">
+          <i class="fas fa-clock"></i>
+        </div>
+        <h2 class="login-heading">Registration Received!</h2>
+        <p class="login-subtext">
+          Your registration is saved. To activate your course:
+        </p>
+        <ol class="confirm-steps">
+          <li><i class="fas fa-rupee-sign"></i> Pay via UPI on the <a href="courses.html">courses page</a></li>
+          <li><i class="fas fa-camera"></i> Send payment screenshot to <strong>duke.lavlesh@gmail.com</strong></li>
+          <li><i class="fas fa-bolt"></i> We'll activate your access within <strong>24 hours</strong></li>
+        </ol>
+        <a href="courses.html" class="login-btn" style="display:flex;justify-content:center;text-decoration:none;margin-top:20px;">
+          <i class="fas fa-arrow-right"></i> Go to Courses
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="login-toast"></div>
+
+  <script src="js/course-data.js"></script>
+  <script src="js/firebase-config.js"></script>
+  <script src="js/login.js"></script>
+</body>
+</html>

@@ -126,7 +126,8 @@ function initAdmin() {
   selectTierTab('foundation');
   renderPostsTable();
   renderEnrollmentSection();
-  initFirebase(); /* async — runs in background */
+  loadRegistrations(); /* async — load student registrations */
+  initFirebase();      /* async — Firebase status + content sync */
 
   document.getElementById('editor-textarea').addEventListener('input', () => {
     isDirty = true;
@@ -247,6 +248,105 @@ function _setFbStatus(status) {
   const s = map[status] || map['not-configured'];
   el.style.color = s.color;
   el.innerHTML   = `<i class="fas ${s.icon}"></i> ${s.label}`;
+}
+
+/* ═══════════════════════════════════════════════
+   STUDENT REGISTRATIONS
+═══════════════════════════════════════════════ */
+
+async function loadRegistrations() {
+  const wrap = document.getElementById('registrations-wrap');
+  if (!wrap) return;
+  wrap.innerHTML = '<p style="color:var(--text-muted);font-size:0.85rem;padding:16px 0;">Loading…</p>';
+
+  const regs = await fsReadAllRegistrations();
+
+  if (!regs) {
+    wrap.innerHTML = '<p style="color:var(--text-muted);font-size:0.85rem;padding:16px 0;">Firebase not configured — no registrations to show.</p>';
+    return;
+  }
+  if (!regs.length) {
+    wrap.innerHTML = '<p style="color:var(--text-muted);font-size:0.85rem;padding:16px 0;">No registrations yet. Students will appear here after they register on the Login page.</p>';
+    return;
+  }
+
+  const tierKeys = Object.keys(TIERS);
+
+  const rows = regs.flatMap(reg => {
+    const interestedTiers = tierKeys.filter(t => reg[t]);
+    const date = reg.registeredAt
+      ? new Date(reg.registeredAt).toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' })
+      : '—';
+    const phone = reg.id || reg.phone || '—';
+
+    if (!interestedTiers.length) {
+      return [`<tr>
+        <td style="font-weight:600;color:var(--text-primary);">${escAdminHtml(reg.name||'—')}</td>
+        <td style="font-family:monospace;">${escAdminHtml(phone)}</td>
+        <td style="color:var(--text-muted);">—</td>
+        <td style="color:var(--text-muted);">${date}</td>
+        <td><span class="reg-status-badge pending"><i class="fas fa-clock"></i> Pending</span></td>
+        <td><button class="reg-delete-btn" onclick="deleteRegistration('${escAdminHtml(phone)}')"><i class="fas fa-trash"></i></button></td>
+      </tr>`];
+    }
+
+    return interestedTiers.map(t => {
+      const status  = reg[t];
+      const tierObj = TIERS[t];
+      return `<tr>
+        <td style="font-weight:600;color:var(--text-primary);">${escAdminHtml(reg.name||'—')}</td>
+        <td style="font-family:monospace;">${escAdminHtml(phone)}</td>
+        <td><span style="font-weight:600;">${escAdminHtml(tierObj.label)}</span>
+            <br><small style="color:var(--text-muted);">${escAdminHtml(tierObj.class)}</small></td>
+        <td style="color:var(--text-muted);">${date}</td>
+        <td><span class="reg-status-badge ${status}">
+          <i class="fas ${status==='verified'?'fa-check-circle':'fa-clock'}"></i>
+          ${status==='verified'?'Verified':'Pending'}
+        </span></td>
+        <td>
+          ${status!=='verified'
+            ? `<button class="reg-verify-btn" onclick="verifyPayment('${escAdminHtml(phone)}','${t}')"><i class="fas fa-check"></i> Verify Payment</button>`
+            : '<span style="color:#4ade80;font-size:0.78rem;"><i class="fas fa-check-circle"></i> Paid</span>'}
+          <button class="reg-delete-btn" onclick="deleteRegistration('${escAdminHtml(phone)}')"><i class="fas fa-trash"></i></button>
+        </td>
+      </tr>`;
+    });
+  });
+
+  wrap.innerHTML = `
+    <div style="overflow-x:auto;">
+      <table class="reg-table">
+        <thead><tr>
+          <th>Name</th><th>Phone</th><th>Course</th>
+          <th>Registered</th><th>Status</th><th>Actions</th>
+        </tr></thead>
+        <tbody>${rows.join('')}</tbody>
+      </table>
+    </div>`;
+}
+
+async function verifyPayment(phone, tierKey) {
+  if (!confirm(`Mark payment as verified for ${phone} — ${TIERS[tierKey].label}?`)) return;
+  const ok = await fsVerifyRegistration(phone, tierKey);
+  if (ok) {
+    showToast(`✓ Payment verified — ${TIERS[tierKey].label} activated for ${phone}`);
+    loadRegistrations();
+  } else {
+    showToast('✗ Could not update — check Firebase connection', true);
+  }
+}
+
+async function deleteRegistration(phone) {
+  if (!confirm(`Delete registration for ${phone}? This cannot be undone.`)) return;
+  await fsDeleteRegistration(phone);
+  showToast('Registration deleted');
+  loadRegistrations();
+}
+
+function escAdminHtml(str) {
+  return String(str)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 }
 
 /* ─── Tier tabs ─── */
