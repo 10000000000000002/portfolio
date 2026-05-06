@@ -45,7 +45,8 @@
         <li><a href="courses.html" class="nav-link active nav-link-courses">AI Courses</a></li>
         <li><a href="index.html#contact" class="nav-link">Contact</a></li>
       </ul>
-      <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
+      <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;" id="nav-auth-area">
+        <!-- Replaced by student chip via JS if logged in -->
         <a href="login.html" class="btn btn-primary"
            style="padding:8px 18px;font-size:0.82rem;">
           <i class="fas fa-user"></i> Login
@@ -386,5 +387,28 @@
   <script src="js/course-data.js"></script>
   <script src="js/firebase-config.js"></script>
   <script src="js/courses.js"></script>
+  <script>
+    /* Show student chip in navbar if logged in */
+    (function () {
+      const name  = sessionStorage.getItem('tg_student_name');
+      const phone = sessionStorage.getItem('tg_student_phone');
+      if (!name || !phone) return;
+
+      const initials = name.trim().split(/\s+/).slice(0, 2).map(w => w[0].toUpperCase()).join('');
+      const first    = name.trim().split(/\s+/)[0];
+
+      const area = document.getElementById('nav-auth-area');
+      if (!area) return;
+      area.innerHTML = `
+        <a href="login.html" class="nav-student-chip" title="My Dashboard">
+          <div class="nav-student-avatar">${initials}</div>
+          <span class="nav-student-name">${first}</span>
+        </a>
+        <button onclick="sessionStorage.removeItem('tg_student_name');sessionStorage.removeItem('tg_student_phone');location.reload();"
+                class="btn" style="padding:8px 14px;font-size:0.78rem;color:#f87171;border-color:rgba(248,113,113,0.3);">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </button>`;
+    })();
+  </script>
 </body>
 </html>

@@ -136,19 +136,42 @@
         </p>
       </div>
 
-      <!-- ── STEP 3: Enrolled student dashboard ── -->
+      <!-- ── STEP 3: Student Dashboard ── -->
       <div id="step-enrolled" style="display:none;">
-        <div class="login-success-icon">
-          <i class="fas fa-check-circle"></i>
-        </div>
-        <h2 class="login-heading" id="enrolled-greeting">Welcome back!</h2>
-        <p class="login-subtext" id="enrolled-subtext">Your enrolled courses are listed below.</p>
 
+        <!-- Dashboard header -->
+        <div class="dash-header">
+          <div class="dash-avatar" id="dash-avatar">LS</div>
+          <div class="dash-header-info">
+            <p class="dash-welcome-label">WELCOME BACK</p>
+            <h2 class="dash-name" id="dash-name">Lavlesh</h2>
+            <p class="dash-phone" id="dash-phone"></p>
+          </div>
+          <button class="dash-logout-btn" onclick="studentLogout()" title="Logout">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Logout</span>
+          </button>
+        </div>
+
+        <!-- Divider -->
+        <div class="dash-divider"></div>
+
+        <!-- Stats row -->
+        <div class="dash-stats" id="dash-stats"></div>
+
+        <!-- Section label -->
+        <p class="dash-section-label">
+          <i class="fas fa-layer-group"></i> My Courses
+        </p>
+
+        <!-- Course cards -->
         <div id="enrolled-courses-list"></div>
 
-        <a href="courses.html" class="login-btn" style="display:flex;justify-content:center;text-decoration:none;margin-top:16px;">
-          <i class="fas fa-graduation-cap"></i> Browse All Courses
+        <!-- Browse more -->
+        <a href="courses.html" class="dash-browse-btn">
+          <i class="fas fa-compass"></i> Browse All Courses
         </a>
+
       </div>
 
       <!-- ── STEP 5: Book Demo Class ── -->

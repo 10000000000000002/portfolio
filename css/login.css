@@ -2,6 +2,279 @@
    LOGIN / REGISTRATION PAGE
 ═══════════════════════════════════════════════ */
 
+/* ── Dashboard: widen the card ── */
+.login-card.dashboard-mode {
+  max-width: 620px;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* ── Dashboard header ── */
+.dash-header {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 32px 32px 24px;
+  background: linear-gradient(135deg, rgba(245,166,35,0.08) 0%, rgba(124,58,237,0.08) 100%);
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+
+.dash-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), #e09410);
+  color: #000;
+  font-size: 1.3rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 20px rgba(245,166,35,0.3);
+}
+
+.dash-header-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.dash-welcome-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  margin: 0 0 4px;
+  text-transform: uppercase;
+}
+
+.dash-name {
+  font-size: 1.55rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 0 0 4px;
+  line-height: 1.1;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.dash-phone {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin: 0;
+  font-family: monospace;
+}
+
+/* Logout button */
+.dash-logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(248,113,113,0.08);
+  border: 1px solid rgba(248,113,113,0.2);
+  color: #f87171;
+  padding: 9px 16px;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+  flex-shrink: 0;
+}
+.dash-logout-btn:hover {
+  background: rgba(248,113,113,0.16);
+  border-color: rgba(248,113,113,0.4);
+}
+
+/* Divider */
+.dash-divider { display: none; }
+
+/* Stats row */
+.dash-stats {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--border);
+}
+.dash-stat-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px 12px;
+  border-right: 1px solid var(--border);
+  gap: 3px;
+}
+.dash-stat-item:last-child { border-right: none; }
+.dash-stat-value {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--accent);
+  line-height: 1;
+}
+.dash-stat-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  text-align: center;
+}
+
+/* Section label */
+.dash-section-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  padding: 18px 32px 10px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.dash-section-label i { color: var(--accent); }
+
+/* Course cards inside dashboard */
+#step-enrolled .enrolled-course-card {
+  margin: 0 32px 10px;
+  border-radius: 14px;
+  padding: 18px 20px;
+}
+
+/* Active course card — golden left border */
+#step-enrolled .enrolled-course-card.active-card {
+  border-left: 3px solid var(--accent);
+}
+
+.enrolled-course-track {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+.enrolled-course-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+.enrolled-course-meta {
+  display: flex;
+  gap: 14px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+.enrolled-course-meta span { display: flex; align-items: center; gap: 4px; }
+.enrolled-course-meta i { color: var(--accent); }
+
+.enrolled-course-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.badge-active {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #4ade80;
+  background: rgba(74,222,128,0.1);
+  border: 1px solid rgba(74,222,128,0.25);
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+.badge-pending {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: rgba(245,166,35,0.1);
+  border: 1px solid rgba(245,166,35,0.25);
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+/* Browse button */
+.dash-browse-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 16px 32px 32px;
+  padding: 13px 24px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+.dash-browse-btn:hover {
+  background: rgba(245,166,35,0.08);
+  border-color: rgba(245,166,35,0.3);
+  color: var(--accent);
+}
+
+/* Navbar student chip */
+.nav-student-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(245,166,35,0.1);
+  border: 1px solid rgba(245,166,35,0.25);
+  border-radius: 30px;
+  padding: 6px 14px 6px 6px;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+.nav-student-chip:hover { background: rgba(245,166,35,0.16); }
+.nav-student-avatar {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), #e09410);
+  color: #000;
+  font-size: 0.7rem;
+  font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+}
+.nav-student-name {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--accent);
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .dash-header { padding: 24px 20px 20px; gap: 12px; }
+  .dash-name { font-size: 1.25rem; }
+  .dash-logout-btn span { display: none; }
+  .dash-logout-btn { padding: 9px 12px; }
+  #step-enrolled .enrolled-course-card { margin: 0 16px 10px; }
+  .dash-section-label { padding: 14px 16px 8px; }
+  .dash-browse-btn { margin: 12px 16px 24px; }
+}
+
 .login-page {
   min-height: 100vh;
   background: var(--bg-primary);
