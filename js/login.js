@@ -228,10 +228,17 @@ window.registerStudent = async function () {
 
   if (!ok) {
     localStorage.setItem(`tg_reg_${currentPhone}`, JSON.stringify(data));
-    showToastLogin('Registration saved locally — Firebase not configured');
   }
 
-  showStep('step-confirm');
+  /* Save session so the navbar chip appears after redirect */
+  saveSession(name, currentPhone);
+
+  /* Redirect to payment modal for the selected course */
+  if (course) {
+    window.location.href = `courses.html?enroll=${encodeURIComponent(course)}`;
+  } else {
+    showStep('step-confirm');
+  }
 };
 
 /* ─── Book Demo Class ─── */
@@ -314,6 +321,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (mode === 'register') {
     showStep('step-register');
+    /* Pre-select course if ?tier=foundation passed from locked module */
+    const tierParam = new URLSearchParams(window.location.search).get('tier');
+    if (tierParam) {
+      const sel = document.getElementById('reg-course');
+      if (sel) sel.value = tierParam;
+    }
     document.getElementById('reg-name').focus();
   } else if (mode === 'demo') {
     showStep('step-demo');

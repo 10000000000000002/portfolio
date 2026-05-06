@@ -86,7 +86,21 @@ if (!tier || !TIERS[tier] || isNaN(modIdx) || modIdx < 0 || modIdx >= TIERS[tier
         buildLangDropdown();
       });
     } else {
-      showLocked();
+      /* Check Firestore — if student logged in and payment verified, auto-unlock */
+      const studentPhone = sessionStorage.getItem('tg_student_phone');
+      if (studentPhone) {
+        fsReadRegistration(studentPhone).then(reg => {
+          if (reg && reg[tier] === 'verified') {
+            /* Payment verified — set local enrollment and reload to grant access */
+            localStorage.setItem(`tg_enrolled_${tier}`, 'true');
+            location.reload();
+          } else {
+            showLocked(reg && reg[tier] === 'pending' ? 'pending' : 'not-registered');
+          }
+        }).catch(() => showLocked('not-registered'));
+      } else {
+        showLocked('not-registered');
+      }
     }
 
     document.getElementById('year').textContent = new Date().getFullYear();
@@ -199,19 +213,72 @@ if (!tier || !TIERS[tier] || isNaN(modIdx) || modIdx < 0 || modIdx >= TIERS[tier
   }
 
   /* ─── Locked overlay ─── */
-  function showLocked() {
+  function showLocked(state) {
     const ls = document.getElementById('lang-selector');
     if (ls) ls.style.display = 'none';
+
+    const returnUrl  = encodeURIComponent(window.location.href);
+    const registerUrl = `login.html?mode=register&tier=${escHtml(tier)}&from=${returnUrl}`;
+    const payUrl      = `courses.html?enroll=${escHtml(tier)}`;
+
+    /* ── State: payment pending ── */
+    const pendingBlock = state === 'pending' ? `
+      <div class="locked-pending-notice">
+        <i class="fas fa-clock"></i>
+        <div>
+          <strong>Payment Verification Pending</strong>
+          <p>Your registration is received. Once we verify your payment, this course will unlock automatically.</p>
+        </div>
+      </div>
+      <a href="${payUrl}" class="btn btn-primary" style="margin-bottom:8px;width:100%;justify-content:center;">
+        <i class="fas fa-rupee-sign"></i> Complete Payment — ${escHtml(tierData.price)}
+      </a>` : '';
+
+    /* ── State: not registered ── */
+    const stepsBlock = state !== 'pending' ? `
+      <div class="locked-steps">
+        <div class="locked-step">
+          <div class="locked-step-num">1</div>
+          <div class="locked-step-text">
+            <strong>Register</strong>
+            <span>Create your free account</span>
+          </div>
+        </div>
+        <div class="locked-step-arrow"><i class="fas fa-chevron-right"></i></div>
+        <div class="locked-step">
+          <div class="locked-step-num">2</div>
+          <div class="locked-step-text">
+            <strong>Pay</strong>
+            <span>${escHtml(tierData.price)} via UPI</span>
+          </div>
+        </div>
+        <div class="locked-step-arrow"><i class="fas fa-chevron-right"></i></div>
+        <div class="locked-step">
+          <div class="locked-step-num done">3</div>
+          <div class="locked-step-text">
+            <strong>Access</strong>
+            <span>Unlock all modules</span>
+          </div>
+        </div>
+      </div>
+      <a href="${registerUrl}" class="btn btn-primary" style="margin-bottom:8px;width:100%;justify-content:center;">
+        <i class="fas fa-user-plus"></i> Register &amp; Enroll — ${escHtml(tierData.price)}
+      </a>` : '';
+
     document.getElementById('post-content-area').innerHTML = `
       <div class="locked-overlay">
         <div class="locked-icon"><i class="fas fa-lock"></i></div>
         <h3>This Module is Locked</h3>
         <p>Enroll in the full <strong>${escHtml(tierData.label)}</strong> course to access all modules and the hands-on project.</p>
-        <a href="courses.html?enroll=${escHtml(tier)}" class="btn btn-primary" style="margin-bottom:12px;">
-          <i class="fas fa-bolt"></i> Enroll Now — ${escHtml(tierData.price)}
-        </a>
+
+        ${stepsBlock}
+        ${pendingBlock}
+
         <div class="unlock-code-section">
-          <p class="unlock-code-hint"><i class="fas fa-check-circle" style="color:#4ade80;"></i> Already paid? Enter your activation code:</p>
+          <p class="unlock-code-hint">
+            <i class="fas fa-check-circle" style="color:#4ade80;"></i>
+            Already received an activation code?
+          </p>
           <div class="unlock-code-row">
             <input type="text" id="unlock-code-input" class="unlock-code-input"
                    placeholder="e.g. TECHG-FOUN-A3K7P2" maxlength="32"
