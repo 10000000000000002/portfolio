@@ -400,12 +400,21 @@
       const area = document.getElementById('nav-auth-area');
       if (!area) return;
       area.innerHTML = `
-        <a href="login.html" class="nav-student-chip" title="My Dashboard">
+        <a href="login.html?mode=dashboard" class="nav-student-chip" title="My Dashboard">
           <div class="nav-student-avatar">${initials}</div>
-          <span class="nav-student-name">${first}</span>
+          <div style="display:flex;flex-direction:column;line-height:1.2;">
+            <span style="font-size:0.62rem;font-weight:700;letter-spacing:0.08em;color:var(--accent);text-transform:uppercase;">Welcome</span>
+            <span class="nav-student-name">${first}</span>
+          </div>
         </a>
         <button onclick="sessionStorage.removeItem('tg_student_name');sessionStorage.removeItem('tg_student_phone');location.reload();"
-                class="btn" style="padding:8px 14px;font-size:0.78rem;color:#f87171;border-color:rgba(248,113,113,0.3);">
+                title="Logout"
+                style="display:flex;align-items:center;gap:6px;background:rgba(248,113,113,0.08);
+                       border:1px solid rgba(248,113,113,0.25);color:#f87171;padding:7px 12px;
+                       border-radius:20px;font-size:0.78rem;font-weight:600;font-family:inherit;
+                       cursor:pointer;transition:background 0.2s;"
+                onmouseover="this.style.background='rgba(248,113,113,0.18)'"
+                onmouseout="this.style.background='rgba(248,113,113,0.08)'">
           <i class="fas fa-sign-out-alt"></i> Logout
         </button>`;
     })();

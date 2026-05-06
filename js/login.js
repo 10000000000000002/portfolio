@@ -171,11 +171,19 @@ window.checkPhone = async function () {
     return;
   }
 
-  const tiers        = Object.keys(TIERS);
+  const tiers         = Object.keys(TIERS);
   const enrolledTiers = tiers.filter(t => reg[t] === 'verified');
   const pendingTiers  = tiers.filter(t => reg[t] === 'pending');
 
-  renderDashboard(reg.name || 'Student', currentPhone, enrolledTiers, pendingTiers);
+  /* Save session first so the chip shows on redirect */
+  saveSession(reg.name || 'Student', currentPhone);
+
+  /* Restore localStorage enrollments */
+  enrolledTiers.forEach(t => localStorage.setItem(`tg_enrolled_${t}`, 'true'));
+
+  /* If coming from a specific page, go back there; otherwise go to courses */
+  const returnTo = new URLSearchParams(window.location.search).get('from');
+  window.location.href = returnTo || 'courses.html';
 };
 
 /* ─── Step 2: Register ─── */
@@ -284,17 +292,23 @@ document.addEventListener('DOMContentLoaded', () => {
   const mode    = new URLSearchParams(window.location.search).get('mode');
   const session = getSession();
 
-  /* If already logged in — go straight to dashboard */
+  /* If already logged in — redirect to courses (or show dashboard if explicitly opened) */
   if (session.name && session.phone && mode !== 'register' && mode !== 'demo') {
-    /* Re-fetch from Firestore to get latest enrollment status */
-    fsReadRegistration(session.phone).then(reg => {
-      if (!reg) { showStep('step-phone'); return; }
-      currentPhone = session.phone;
-      const tiers         = Object.keys(TIERS);
-      const enrolledTiers = tiers.filter(t => reg[t] === 'verified');
-      const pendingTiers  = tiers.filter(t => reg[t] === 'pending');
-      renderDashboard(reg.name || session.name, session.phone, enrolledTiers, pendingTiers);
-    });
+    if (mode === 'dashboard') {
+      /* Explicit dashboard request — re-fetch and show */
+      fsReadRegistration(session.phone).then(reg => {
+        if (!reg) { showStep('step-phone'); return; }
+        currentPhone = session.phone;
+        const tiers         = Object.keys(TIERS);
+        const enrolledTiers = tiers.filter(t => reg[t] === 'verified');
+        const pendingTiers  = tiers.filter(t => reg[t] === 'pending');
+        renderDashboard(reg.name || session.name, session.phone, enrolledTiers, pendingTiers);
+      });
+    } else {
+      /* Already logged in — go straight to courses */
+      const returnTo = new URLSearchParams(window.location.search).get('from');
+      window.location.href = returnTo || 'courses.html';
+    }
     return;
   }
 

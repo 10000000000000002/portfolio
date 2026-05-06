@@ -24,6 +24,7 @@
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/courses.css" />
   <link rel="stylesheet" href="css/post.css" />
+  <link rel="stylesheet" href="css/login.css" />
   <script src="https://cdn.jsdelivr.net/npm/marked@9/marked.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.6/purify.min.js"></script>
 </head>
@@ -48,6 +49,8 @@
         <li><a href="courses.html" class="nav-link active nav-link-courses">AI Courses</a></li>
         <li><a href="index.html#contact" class="nav-link">Contact</a></li>
       </ul>
+      <!-- Student chip — injected by JS if logged in -->
+      <div id="nav-student-area" style="display:flex;align-items:center;gap:8px;flex-shrink:0;"></div>
       <button class="hamburger" id="hamburger" aria-label="Toggle menu">
         <span></span><span></span><span></span>
       </button>
@@ -184,5 +187,46 @@
   <script src="js/seed-posts.js"></script>
   <script src="js/firebase-config.js"></script>
   <script src="js/post.js"></script>
+  <script>
+    /* Inject student chip into navbar if logged in */
+    (function () {
+      const name  = sessionStorage.getItem('tg_student_name');
+      const phone = sessionStorage.getItem('tg_student_phone');
+      const area  = document.getElementById('nav-student-area');
+      if (!area) return;
+      if (!name || !phone) {
+        area.innerHTML = `
+          <a href="login.html" style="display:flex;align-items:center;gap:6px;
+             font-size:0.8rem;font-weight:600;color:var(--text-muted);text-decoration:none;
+             padding:6px 12px;border:1px solid var(--border);border-radius:20px;
+             transition:color 0.2s,border-color 0.2s;"
+             onmouseover="this.style.color='var(--accent)';this.style.borderColor='rgba(245,166,35,0.4)'"
+             onmouseout="this.style.color='var(--text-muted)';this.style.borderColor='var(--border)'">
+            <i class="fas fa-user"></i> Login
+          </a>`;
+        return;
+      }
+      const initials = name.trim().split(/\s+/).slice(0,2).map(w=>w[0].toUpperCase()).join('');
+      const first    = name.trim().split(/\s+/)[0].toUpperCase();
+      area.innerHTML = `
+        <a href="login.html?mode=dashboard" class="nav-student-chip" title="My Dashboard">
+          <div class="nav-student-avatar">${initials}</div>
+          <div style="display:flex;flex-direction:column;line-height:1.2;">
+            <span style="font-size:0.62rem;font-weight:700;letter-spacing:0.08em;color:var(--accent);text-transform:uppercase;">Welcome</span>
+            <span class="nav-student-name">${first}</span>
+          </div>
+        </a>
+        <button onclick="sessionStorage.removeItem('tg_student_name');sessionStorage.removeItem('tg_student_phone');location.reload();"
+                title="Logout"
+                style="display:flex;align-items:center;gap:6px;background:rgba(248,113,113,0.08);
+                       border:1px solid rgba(248,113,113,0.25);color:#f87171;padding:7px 12px;
+                       border-radius:20px;font-size:0.78rem;font-weight:600;font-family:inherit;
+                       cursor:pointer;transition:background 0.2s;"
+                onmouseover="this.style.background='rgba(248,113,113,0.18)'"
+                onmouseout="this.style.background='rgba(248,113,113,0.08)'">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </button>`;
+    })();
+  </script>
 </body>
 </html>
